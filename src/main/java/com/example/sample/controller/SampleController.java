@@ -11,8 +11,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,9 @@ import java.io.IOException;
 @RequestMapping("/sample")
 public class SampleController {
     private final SampleService sampleService;
+
+    @Value("${isActive}")
+    private boolean isActive;
 
     @GetMapping("/{id}")
     public ResponseEntity<Response<SampleDto>> findById(@PathVariable Long id) {
@@ -72,8 +77,13 @@ public class SampleController {
     }
 
     @GetMapping("/old")
-    public void old(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/sample/new").forward(request, response);
+    public ResponseEntity<Response<String>> old(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (!isActive) {
+            request.getRequestDispatcher("/sample/new").forward(request, response);
+        }
+
+        Response<String> res = Response.of("old response success");
+        return ResponseEntity.ok(res);
     }
 
     @GetMapping("/new")

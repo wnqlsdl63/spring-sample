@@ -6,7 +6,6 @@ import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -45,7 +44,7 @@ public class LoggingAspect {
         log.error("[Exception] {} thrown in {}: {}", ex.getClass().getSimpleName(), methodDetail, ex.getMessage());
     }
 
-    public String methodDetail(MethodSignature methodSignature) {
+    private String methodDetail(MethodSignature methodSignature) {
         // 메소드의 클래스와 메소드명
         String className = methodSignature.getDeclaringType().getName();
         String methodName = methodSignature.getMethod().getName();

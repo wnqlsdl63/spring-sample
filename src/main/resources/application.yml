@@ -7,7 +7,6 @@ spring:
     web:
       pageable:
         default-page-size: 5
-  # 초기 데이터 로딩
   sql:
     init:
       mode: always
@@ -29,3 +28,6 @@ spring:
         format_sql: true
         show_sql: true
         highlight_sql: true
+
+
+isActive: true
