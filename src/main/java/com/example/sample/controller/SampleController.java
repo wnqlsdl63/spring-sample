@@ -50,8 +50,6 @@ public class SampleController {
     public ResponseEntity<Response<SliceDto<SampleDto>>> findSampleSlices(@RequestParam(required = false) String email, @PageableDefault(size = 3) Pageable pageable) {
         Response<SliceDto<SampleDto>> response = Response.of(sampleService.findSampleSlices(email, pageable));
 
-        log.info("response => {}", response);
-
         return ResponseEntity.ok(response);
     }
 
@@ -82,8 +80,7 @@ public class SampleController {
             request.getRequestDispatcher("/sample/new").forward(request, response);
         }
 
-        Response<String> res = Response.of("old response success");
-        return ResponseEntity.ok(res);
+        return ResponseEntity.ok(Response.of("old response success"));
     }
 
     @GetMapping("/new")
